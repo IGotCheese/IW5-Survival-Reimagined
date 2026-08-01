@@ -1,0 +1,12 @@
+# Never publish credentials or binaries
+*.conf
+.r2.conf
+token.txt
+*.key
+*.pem
+count-players.ps1
+rclone*
+*.exe
+*.dll
+*.iwd
+*.ff
