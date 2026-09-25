@@ -4,7 +4,7 @@
 # loaded at the time, and writes a compact digest to C:\Ops\script-errors.md.
 #
 # The digest turns a multi-thousand-line error flood into a handful of unique signatures with counts,
-# first/last-seen, map context, and the call stack — ready to hand to Claude for diagnosis/repair.
+# first/last-seen, map context, and the call stack, ready for diagnosis and repair.
 # Known-benign signatures are tagged [KNOWN] so genuinely NEW errors stand out as [NEW].
 #
 # Runs continuously; started by a scheduled task at logon (mirrors mw3-watchdog.ps1). Single-instance.
@@ -35,7 +35,7 @@ $mtx = New-Object System.Threading.Mutex($false,'Global\YourServerMW3ErrorCollec
 try { $acquired = $mtx.WaitOne(0) } catch [System.Threading.AbandonedMutexException] { $acquired = $true }
 if (-not $acquired) { exit 0 }
 
-# ── Known-benign signature notes (Claude-maintained). Matched as substrings of the signature. ──
+# ── Known-benign signature notes. Matched as substrings of the signature. ──
 # Keeps the diagnosed, non-fatal, pre-existing noise from masking genuinely new problems.
 # Keys are "fragment|fragment" pairs; ALL fragments must appear somewhere in (message + full stack).
 $known = @{
